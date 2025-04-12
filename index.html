@@ -164,26 +164,30 @@
             }
 
             // Enviar datos al servidor de Google Apps Script
-            fetch('https://script.google.com/macros/s/AKfycbzBJOKIC0vH2MmAYrRyDFc_V_vEDrLfrVRIDslokYeM4Tvcy4K53ka8TdvcypjWEfKq/exec', { // Reemplaza con el URL de la aplicación web
-                method: 'POST',
-                body: JSON.stringify(datos),
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-            })
-            .then(response => response.json())
-            .then(result => {
-                if (result.status === 'success') {
-                    alert('¡Solicitud enviada! Los datos han sido guardados.');
-                    event.target.reset(); // Reiniciar el formulario
-                } else {
-                    alert('Error al guardar los datos: ' + result.message);
-                }
-            })
-            .catch(error => {
-                console.error('Error al enviar los datos:', error);
-                alert('Hubo un error al enviar la solicitud. Inténtalo de nuevo.');
-            });
+            fetch('https://script.google.com/macros/s/AKfycbyclc24mm2Z_27uoT7RlUomFOE1vsaUZDDu4GNglXau5l_lLUneJKj_GaGd-QrO7Phc/exec', { // Reemplaza con el nuevo URL del script
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json' // Encabezado necesario
+  },
+  body: JSON.stringify(datos) // Datos enviados al servidor
+})
+  .then(response => {
+    if (!response.ok) {
+      throw new Error('Error en la respuesta del servidor');
+    }
+    return response.json();
+  })
+  .then(result => {
+    if (result.status === 'success') {
+      alert('¡Solicitud enviada! Los datos han sido guardados.');
+    } else {
+      alert('Error al guardar los datos: ' + result.message);
+    }
+  })
+  .catch(error => {
+    console.error('Error al enviar los datos:', error);
+    alert('Hubo un error al enviar la solicitud. Inténtalo de nuevo.');
+  });
         });
 
         // Establecer la fecha mínima para el campo de llegada
